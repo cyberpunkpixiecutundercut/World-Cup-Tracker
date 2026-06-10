@@ -1187,32 +1187,58 @@ function renderKnockoutRound(worldcup, roundKey, container, editable) {
     }
   });
 
-  // ⭐ FIXED LABEL LOGIC
+  // ⭐ WINNER LABEL
   const winnersLabel =
-    (roundKey === "thirdplace" || roundKey === "final")
+    roundKey === "final"
       ? "WINNER"
+      : roundKey === "thirdplace"
+      ? "Third Place"
       : "WINNERS";
+
+  // ⭐ LOSER LABEL
+  let loserLabel = null;
+
+  if (roundKey === "final") {
+    loserLabel = "Runner-Up";
+  } else if (roundKey === "thirdplace") {
+    loserLabel = null; // hide loser block
+  } else {
+    loserLabel = "Eliminated";
+  }
 
   const summary = document.createElement("div");
   summary.className = "knockout-summary";
+
   summary.innerHTML = `
     <h3>Match Reports / Results</h3>
+
     <div class="summary-block">
       <h4>${winnersLabel}</h4>
       ${winners.map(t => `<div>${t}</div>`).join("")}
     </div>
-    <div class="summary-block">
-      <h4>ELIMINATED</h4>
-      ${losers.map(t => `<div>${t}</div>`).join("")}
-    </div>
+  `;
+
+  // ⭐ Only show loser block if label exists
+  if (loserLabel) {
+    summary.innerHTML += `
+      <div class="summary-block">
+        <h4>${loserLabel}</h4>
+        ${losers.map(t => `<div>${t}</div>`).join("")}
+      </div>
+    `;
+  }
+
+  summary.innerHTML += `
     <div class="summary-block">
       <h4>EXTRA TIME</h4>
       ${extraTime.length ? extraTime.map(x => `<div>${x}</div>`).join("") : "<div>None</div>"}
     </div>
+
     <div class="summary-block">
       <h4>PENALTIES</h4>
       ${penalties.length ? penalties.map(x => `<div>${x}</div>`).join("") : "<div>None</div>"}
     </div>
+
     <div class="summary-block">
       <h4>MATCH RESULTS</h4>
       ${results.map(x => `<div>${x}</div>`).join("")}
