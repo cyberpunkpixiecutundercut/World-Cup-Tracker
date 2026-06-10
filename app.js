@@ -1096,7 +1096,6 @@ function renderKnockoutRound(worldcup, roundKey, container, editable) {
     const row = document.createElement("div");
     row.className = "match-row s2plus";
 
-    // Normalize scores
     if (m.score1 === "") m.score1 = null;
     if (m.score2 === "") m.score2 = null;
     if (typeof m.score1 === "string" && m.score1 !== "") m.score1 = parseInt(m.score1, 10);
@@ -1105,7 +1104,6 @@ function renderKnockoutRound(worldcup, roundKey, container, editable) {
     const t1 = findTeamName(worldcup, m.team1);
     const t2 = findTeamName(worldcup, m.team2);
 
-    // Extract ET and PEN from JSON ("0-0", "4-3")
     let etH = "", etA = "";
     if (m.extraTime && m.extraTime.includes("-")) {
       const [h, a] = m.extraTime.split("-");
@@ -1120,7 +1118,6 @@ function renderKnockoutRound(worldcup, roundKey, container, editable) {
       penA = a;
     }
 
-    // Editable vs View mode
     if (editable) {
       row.innerHTML = `
         <span class="team-name">${t1}</span>
@@ -1155,7 +1152,6 @@ function renderKnockoutRound(worldcup, roundKey, container, editable) {
 
     panel.appendChild(row);
 
-    // Winner detection (Normal → ET → Penalty)
     if (m.score1 != null && m.score2 != null) {
       const t1Name = findTeamName(worldcup, m.team1);
       const t2Name = findTeamName(worldcup, m.team2);
@@ -1191,10 +1187,11 @@ function renderKnockoutRound(worldcup, roundKey, container, editable) {
     }
   });
 
+  // ⭐ FIXED LABEL LOGIC
   const winnersLabel =
     (roundKey === "thirdplace" || roundKey === "final")
-      ? "WINNERS"
-      : "WINNERS (advance)";
+      ? "WINNER"
+      : "WINNERS";
 
   const summary = document.createElement("div");
   summary.className = "knockout-summary";
@@ -1234,8 +1231,6 @@ function renderKnockoutRound(worldcup, roundKey, container, editable) {
 
   panel.appendChild(summary);
 }
-
-
 
 /* ============================================================
    FINAL PANEL (CHAMPION)
