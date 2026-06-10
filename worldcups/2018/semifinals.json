@@ -1,0 +1,21 @@
+{
+  "label": "Semifinals",
+  "matches": [
+    {
+      "team1": "France",
+      "team2": "Belgium",
+      "score1": 1,
+      "score2": 0,
+      "extraTime": "",
+      "penalty": ""
+    },
+    {
+      "team1": "Croatia",
+      "team2": "England",
+      "score1": 2,
+      "score2": 1,
+      "extraTime": "1-0",
+      "penalty": ""
+    }
+  ]
+}

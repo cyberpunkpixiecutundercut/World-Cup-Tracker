@@ -1,0 +1,88 @@
+{
+  "year": 2018,
+  "format": 32,
+  "teams": {
+    "groups": [
+      {
+        "id": "A",
+        "label": "Group A",
+        "teams": [
+          { "id": "A1", "name": "Russia" },
+          { "id": "A2", "name": "Saudi Arabia" },
+          { "id": "A3", "name": "Egypt" },
+          { "id": "A4", "name": "Uruguay" }
+        ]
+      },
+      {
+        "id": "B",
+        "label": "Group B",
+        "teams": [
+          { "id": "B1", "name": "Portugal" },
+          { "id": "B2", "name": "Spain" },
+          { "id": "B3", "name": "Morocco" },
+          { "id": "B4", "name": "Iran" }
+        ]
+      },
+      {
+        "id": "C",
+        "label": "Group C",
+        "teams": [
+          { "id": "C1", "name": "France" },
+          { "id": "C2", "name": "Australia" },
+          { "id": "C3", "name": "Peru" },
+          { "id": "C4", "name": "Denmark" }
+        ]
+      },
+      {
+        "id": "D",
+        "label": "Group D",
+        "teams": [
+          { "id": "D1", "name": "Argentina" },
+          { "id": "D2", "name": "Iceland" },
+          { "id": "D3", "name": "Croatia" },
+          { "id": "D4", "name": "Nigeria" }
+        ]
+      },
+      {
+        "id": "E",
+        "label": "Group E",
+        "teams": [
+          { "id": "E1", "name": "Brazil" },
+          { "id": "E2", "name": "Switzerland" },
+          { "id": "E3", "name": "Costa Rica" },
+          { "id": "E4", "name": "Serbia" }
+        ]
+      },
+      {
+        "id": "F",
+        "label": "Group F",
+        "teams": [
+          { "id": "F1", "name": "Germany" },
+          { "id": "F2", "name": "Mexico" },
+          { "id": "F3", "name": "Sweden" },
+          { "id": "F4", "name": "South Korea" }
+        ]
+      },
+      {
+        "id": "G",
+        "label": "Group G",
+        "teams": [
+          { "id": "G1", "name": "Belgium" },
+          { "id": "G2", "name": "Panama" },
+          { "id": "G3", "name": "Tunisia" },
+          { "id": "G4", "name": "England" }
+        ]
+      },
+      {
+        "id": "H",
+        "label": "Group H",
+        "teams": [
+          { "id": "H1", "name": "Poland" },
+          { "id": "H2", "name": "Senegal" },
+          { "id": "H3", "name": "Colombia" },
+          { "id": "H4", "name": "Japan" }
+        ]
+      }
+    ]
+  }
+}

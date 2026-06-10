@@ -1,0 +1,13 @@
+{
+  "label": "Round of 16",
+  "matches": [
+    { "team1": "Germany", "team2": "Sweden", "score1": 2, "score2": 0, "extraTime": "", "penalty": "" },
+    { "team1": "Argentina", "team2": "Mexico", "score1": 2, "score2": 1, "extraTime": "1-0", "penalty": "" },
+    { "team1": "Italy", "team2": "Australia", "score1": 1, "score2": 0, "extraTime": "1-0", "penalty": "" },
+    { "team1": "Switzerland", "team2": "Ukraine", "score1": 0, "score2": 0, "extraTime": "0-0", "penalty": "0-3" },
+    { "team1": "Brazil", "team2": "Ghana", "score1": 3, "score2": 0, "extraTime": "", "penalty": "" },
+    { "team1": "Spain", "team2": "France", "score1": 1, "score2": 3, "extraTime": "", "penalty": "" },
+    { "team1": "England", "team2": "Ecuador", "score1": 1, "score2": 0, "extraTime": "", "penalty": "" },
+    { "team1": "Portugal", "team2": "Netherlands", "score1": 1, "score2": 0, "extraTime": "", "penalty": "" }
+  ]
+}

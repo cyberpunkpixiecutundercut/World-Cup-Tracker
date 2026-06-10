@@ -1,0 +1,668 @@
+/* ===========================
+   GLOBAL
+=========================== */
+body {
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: #eee;
+  margin: 0;
+}
+
+header {
+  background: #222;
+  padding: 15px;
+  border-bottom: 2px solid #444;
+}
+
+.header-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+input,
+select {
+  background: #000;
+  color: #eee;
+  border: 1px solid #555;
+  padding: 4px 6px;
+}
+
+.match-row input[type="number"] {
+  width: 40px;
+  text-align: center;
+  padding: 2px 4px;
+}
+
+button {
+  background: #444;
+  color: #eee;
+  border: 1px solid #666;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #666;
+}
+
+main {
+  padding: 20px;
+}
+
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 20px;
+}
+
+section {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  padding: 15px;
+}
+
+.section-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+/* ===========================
+   TEAMS PANEL
+=========================== */
+.group-block {
+  border: 1px solid #555;
+  padding: 8px;
+  margin-bottom: 12px;
+  background: #181818;
+}
+
+.group-title {
+  font-weight: bold;
+  margin-bottom: 6px;
+  color: #0af;
+}
+
+.team-row input {
+  width: 200px;
+  background: #000;
+  color: #eee;
+  border: 1px solid #555;
+  padding: 4px;
+}
+
+.team-row.readonly span {
+  display: block;
+  padding: 4px 0;
+  color: #ddd;
+}
+
+/* ===========================
+   SEASON TABS
+=========================== */
+#finishedSeasonTabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.season-tab {
+  background: #333;
+  border: 1px solid #555;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.season-tab.active {
+  background: #0a7;
+  border-color: #0c9;
+}
+
+.season-tab:nth-child(2) {
+ 
+}
+
+/* ===========================
+   ROUND TITLE
+=========================== */
+.round-title {
+  margin: 5px 0 10px 0;
+  font-size: 16px;
+  color: #0af;
+}
+
+/* ===========================
+   MATCH ROW BASE
+=========================== */
+.match-row {
+  margin: 6px 0;
+  padding: 8px;
+  background: #222;
+  border: 1px solid #333;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ===========================
+   UNIVERSAL SCORE BOX + LINE
+=========================== */
+.score-box,
+.score-separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 70px;
+}
+
+.score-num {
+  font-weight: bold;
+  color: #fff;
+  font-size: 14px;
+}
+
+.score-line {
+  width: 8px;
+  height: 2px;
+  background: linear-gradient(to right, #0af, #0ff);
+  border-radius: 2px;
+  filter: drop-shadow(0 0 4px #0af);
+  display: inline-block;
+  margin: 0 2px;
+  align-self: center;
+}
+
+/* ===========================
+   GROUP STAGE HEADER
+=========================== */
+.match-row.s1.match-header {
+  display: grid;
+  grid-template-columns: 1.6fr 0.8fr 1.6fr;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: bold;
+  color: #0af;
+  background: #181818;
+  border: 1px solid #333;
+  padding: 10px;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ===========================
+   GROUP STAGE MATCH ROW
+=========================== */
+.match-row.s1.centered-row {
+  display: grid;
+  grid-template-columns: 1.6fr auto 1.6fr;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.team-home,
+.team-away {
+  font-size: 13px;
+  color: #eee;
+  text-align: center;
+}
+
+/* ===========================
+   GROUP TABLES
+=========================== */
+.group-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-top: 6px;
+  text-align: center;
+  background: #111;
+}
+
+.group-table th {
+  border: 1px solid #333;
+  padding: 6px 8px;
+  color: #0af;
+  background: #181818;
+  font-weight: bold;
+}
+
+.group-table td {
+  border: 1px solid #333;
+  padding: 6px 8px;
+  color: #ddd;
+}
+
+.group-table.mini {
+  margin-bottom: 12px;
+  background: #151515;
+}
+
+.group-table.total {
+  margin-top: 15px;
+  background: #181818;
+}
+
+/* ===========================
+   GROUP BOX
+=========================== */
+.group-box {
+  margin-top: 15px;
+  padding: 10px;
+  background: #181818;
+  border: 1px solid #444;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ===========================
+   GROUP HEADER
+=========================== */
+.group-header {
+  font-weight: bold;
+  color: #0af;
+  margin-bottom: 10px;
+  text-align: left;
+  padding-left: 2px;
+}
+
+/* ===========================
+   TEAM DROPDOWN
+=========================== */
+.team-dropdown {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #000;
+  padding: 3px 6px;
+  border: 1px solid #444;
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+}
+
+.team-dropdown:hover {
+  background: #111;
+}
+
+.team-name {
+  color: #eee;
+  font-size: 13px;
+}
+
+.epic-slash {
+  width: 14px;
+  height: 14px;
+}
+
+.epic-slash line {
+  stroke: #0af;
+  stroke-width: 2;
+  filter: drop-shadow(0 0 4px #0af);
+}
+
+.team-menu {
+  display: none;
+  position: absolute;
+  top: 26px;
+  left: 0;
+  background: #222;
+  border: 1px solid #444;
+  padding: 6px 10px;
+  border-radius: 4px;
+  z-index: 20;
+  min-width: 160px;
+}
+
+.team-dropdown.open .team-menu {
+  display: block;
+}
+
+.team-menu div {
+  padding: 2px 0;
+  font-size: 13px;
+  color: #ddd;
+}
+
+/* ===========================
+   KNOCKOUT (ROUND16 → FINAL)
+=========================== */
+.match-row.s2plus {
+  display: grid;
+  grid-template-columns:
+    1.6fr
+    1fr
+    1.6fr
+    0.6fr
+    0.6fr
+    0.6fr
+    0.6fr;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.match-row.s2plus.match-header {
+  font-weight: bold;
+  color: #0af;
+  background: #181818;
+  border: 1px solid #333;
+  padding: 8px;
+  border-radius: 4px;
+  display: grid;
+  grid-template-columns:
+    1.6fr 1fr 1.6fr 0.6fr 0.6fr 0.6fr 0.6fr;
+  text-align: center;
+}
+
+.match-row.s2plus.readonly span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.match-row.s2plus .score-separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* ===========================
+   PANELS
+=========================== */
+.groupstage-panel,
+.knockout-panel,
+.final-panel {
+  margin-top: 10px;
+}
+
+/* ===========================
+   KNOCKOUT SUMMARY
+=========================== */
+.knockout-summary {
+  margin-top: 15px;
+  padding: 10px;
+  background: #181818;
+  border: 1px solid #444;
+  border-radius: 4px;
+}
+
+.knockout-summary h3 {
+  margin: 0 0 8px 0;
+  color: #0af;
+  font-size: 15px;
+}
+
+.summary-block h4 {
+  margin: 6px 0 2px 0;
+  color: #0af;
+  font-size: 13px;
+}
+
+.summary-block div {
+  font-size: 13px;
+  color: #ddd;
+}
+
+/* ===========================
+   CHAMPION LABEL
+=========================== */
+.champion-label {
+  text-align: left;
+  margin-top: 10px;
+}
+
+.champion-title {
+  display: block;
+  font-weight: bold;
+  font-size: 15px;
+  color: #0af;
+  margin-bottom: 4px;
+}
+
+.champion-name {
+  display: block;
+  font-size: 14px;
+  color: #fff;
+}
+
+/* ===========================
+   QUALIFICATION BOXES
+=========================== */
+.qual-boxes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.qual-box {
+  border: 1px solid #555;
+  padding: 8px;
+  background: #181818;
+}
+
+.qual-box h4 {
+  margin: 0 0 6px 0;
+  font-size: 13px;
+  color: #0af;
+}
+.champion-block {
+  margin-top: 15px;
+  border-top: 1px solid #00aaff;
+  padding-top: 10px;
+}
+.champion-title {
+  color: #00aaff;
+  font-weight: bold;
+}
+.champion-name {
+  color: #fff;
+  font-weight: bold;
+}
+
+footer {
+  margin-top: 20px;
+  padding: 20px 40px 20px 20px;
+  color: #ccc;
+  font-size: 14px;
+  line-height: 1.6;
+  border-top: 1px solid #333;
+  text-align: left;
+}
+
+footer p {
+  margin: 0;
+  padding-right: 40px; 
+  max-width: 95%; 
+}
+
+/* ===========================
+   Knockout Editable Layout
+=========================== */
+.match-row.s2plus input[type="number"],
+.match-row.s2plus input[type="text"] {
+  width: 55px;               
+  max-width: 60px;
+  background: #000;
+  color: #0af;
+  border: 1px solid #333;
+  text-align: center;
+  padding: 3px 4px;
+  font-size: 12px;
+  box-sizing: border-box;
+}
+
+.match-row.s2plus {
+  padding: 4px 8px;     
+  gap: 4px;             
+  align-items: center;
+}
+
+.match-row.s2plus.match-header {
+  padding: 6px 8px;         
+}
+
+.knockout-panel {
+  max-width: 900px;           
+  margin: 0 auto;          
+}
+
+.knockout-panel .team-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.standings-title {
+  font-weight: bold;
+  color: #0af;
+  margin-top: 12px;
+  margin-bottom: 6px;
+  font-size: 16px;
+  text-align: left;
+  letter-spacing: 0.5px;
+}
+
+/* MOBILE LAYOUT */
+@media (max-width: 600px) {
+
+  /* Global scaling */
+  body {
+    padding: 0 10px;
+    font-size: 14px;
+  }
+
+  h1, h2, h3 {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  /* Group tables */
+  .group-container {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .group-table {
+    width: 100%;
+    border-spacing: 0;
+    font-size: 13px;
+  }
+
+  .group-table th,
+  .group-table td {
+    padding: 6px 4px;
+    text-align: center;
+  }
+
+  /* Match rows */
+  .match-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+  }
+
+  .match-teams {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+  }
+
+  .match-score {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  /* Knockout bracket */
+  .knockout-round {
+    width: 100%;
+    margin: 15px 0;
+  }
+
+  .knockout-match {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+  }
+
+  .knockout-team {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+  }
+
+  /* Final / Third place */
+  .final-container,
+  .thirdplace-container {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 20px;
+  }
+
+  .final-score,
+  .thirdplace-score {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px 0;
+  }
+
+  /* Buttons */
+  button,
+  .btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+    margin: 6px 0;
+    border-radius: 6px;
+  }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .tab {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    font-size: 15px;
+  }
+
+  /* Team flags / icons */
+  .team-flag {
+    width: 20px;
+    height: 14px;
+  }
+
+  /* Fix overflow */
+  .scroll-x {
+    overflow-x: auto;
+  }
+}
+
+
+

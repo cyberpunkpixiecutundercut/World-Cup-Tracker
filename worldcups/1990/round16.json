@@ -1,0 +1,69 @@
+{
+  "label": "Round of 16",
+  "matches": [
+    {
+      "team1": "Italy",
+      "team2": "Uruguay",
+      "score1": 2,
+      "score2": 0,
+      "extraTime": "",
+      "penalty": ""
+    },
+    {
+      "team1": "Spain",
+      "team2": "Yugoslavia",
+      "score1": 1,
+      "score2": 2,
+      "extraTime": "0-1",
+      "penalty": ""
+    },
+    {
+      "team1": "Brazil",
+      "team2": "Argentina",
+      "score1": 0,
+      "score2": 1,
+      "extraTime": "",
+      "penalty": ""
+    },
+    {
+      "team1": "Czechoslovakia",
+      "team2": "Costa Rica",
+      "score1": 4,
+      "score2": 1,
+      "extraTime": "",
+      "penalty": ""
+    },
+    {
+      "team1": "Cameroon",
+      "team2": "Colombia",
+      "score1": 2,
+      "score2": 1,
+      "extraTime": "1-0",
+      "penalty": ""
+    },
+    {
+      "team1": "Germany",
+      "team2": "Netherlands",
+      "score1": 2,
+      "score2": 1,
+      "extraTime": "",
+      "penalty": ""
+    },
+    {
+      "team1": "Ireland",
+      "team2": "Romania",
+      "score1": 0,
+      "score2": 0,
+      "extraTime": "0-0",
+      "penalty": "5-4"
+    },
+    {
+      "team1": "England",
+      "team2": "Belgium",
+      "score1": 1,
+      "score2": 0,
+      "extraTime": "1-0",
+      "penalty": ""
+    }
+  ]
+}

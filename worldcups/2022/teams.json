@@ -1,0 +1,88 @@
+{
+  "year": 2022,
+  "format": 32,
+  "teams": {
+    "groups": [
+      {
+        "id": "A",
+        "label": "Group A",
+        "teams": [
+          { "id": "A1", "name": "Qatar" },
+          { "id": "A2", "name": "Ecuador" },
+          { "id": "A3", "name": "Senegal" },
+          { "id": "A4", "name": "Netherlands" }
+        ]
+      },
+      {
+        "id": "B",
+        "label": "Group B",
+        "teams": [
+          { "id": "B1", "name": "England" },
+          { "id": "B2", "name": "Iran" },
+          { "id": "B3", "name": "United States" },
+          { "id": "B4", "name": "Wales" }
+        ]
+      },
+      {
+        "id": "C",
+        "label": "Group C",
+        "teams": [
+          { "id": "C1", "name": "Argentina" },
+          { "id": "C2", "name": "Saudi Arabia" },
+          { "id": "C3", "name": "Mexico" },
+          { "id": "C4", "name": "Poland" }
+        ]
+      },
+      {
+        "id": "D",
+        "label": "Group D",
+        "teams": [
+          { "id": "D1", "name": "France" },
+          { "id": "D2", "name": "Australia" },
+          { "id": "D3", "name": "Denmark" },
+          { "id": "D4", "name": "Tunisia" }
+        ]
+      },
+      {
+        "id": "E",
+        "label": "Group E",
+        "teams": [
+          { "id": "E1", "name": "Spain" },
+          { "id": "E2", "name": "Costa Rica" },
+          { "id": "E3", "name": "Germany" },
+          { "id": "E4", "name": "Japan" }
+        ]
+      },
+      {
+        "id": "F",
+        "label": "Group F",
+        "teams": [
+          { "id": "F1", "name": "Belgium" },
+          { "id": "F2", "name": "Canada" },
+          { "id": "F3", "name": "Morocco" },
+          { "id": "F4", "name": "Croatia" }
+        ]
+      },
+      {
+        "id": "G",
+        "label": "Group G",
+        "teams": [
+          { "id": "G1", "name": "Brazil" },
+          { "id": "G2", "name": "Serbia" },
+          { "id": "G3", "name": "Switzerland" },
+          { "id": "G4", "name": "Cameroon" }
+        ]
+      },
+      {
+        "id": "H",
+        "label": "Group H",
+        "teams": [
+          { "id": "H1", "name": "Portugal" },
+          { "id": "H2", "name": "Ghana" },
+          { "id": "H3", "name": "Uruguay" },
+          { "id": "H4", "name": "South Korea" }
+        ]
+      }
+    ]
+  }
+}

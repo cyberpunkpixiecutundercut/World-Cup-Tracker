@@ -1,0 +1,16 @@
+{
+  "label": "Round of 16",
+  "matches": [
+    { "team1": "A1", "score1": 4, "team2": "B2", "score2": 1, "extraTime": "", "penalty": "" },
+    { "team1": "B1", "score1": 1, "team2": "A2", "score2": 0, "extraTime": "", "penalty": "" },
+
+    { "team1": "C1", "score1": 1, "team2": "D2", "score2": 1, "extraTime": "1-0", "penalty": "" },
+    { "team1": "D1", "score1": 1, "team2": "C2", "score2": 1, "extraTime": "", "penalty": "3-4" },
+
+    { "team1": "E1", "score1": 2, "team2": "F2", "score2": 1, "extraTime": "", "penalty": "" },
+    { "team1": "F1", "score1": 2, "team2": "E2", "score2": 1, "extraTime": "", "penalty": "" },
+
+    { "team1": "G1", "score1": 1, "team2": "H2", "score2": 0, "extraTime": "", "penalty": "" },
+    { "team1": "H1", "score1": 2, "team2": "G2", "score2": 2, "extraTime": "", "penalty": "4-3" }
+  ]
+}

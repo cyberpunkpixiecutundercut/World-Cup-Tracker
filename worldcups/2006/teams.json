@@ -1,0 +1,88 @@
+{
+  "year": 2006,
+  "format": 32,
+  "teams": {
+    "groups": [
+      {
+        "id": "A",
+        "label": "Group A",
+        "teams": [
+          { "id": "A1", "name": "Germany" },
+          { "id": "A2", "name": "Costa Rica" },
+          { "id": "A3", "name": "Poland" },
+          { "id": "A4", "name": "Ecuador" }
+        ]
+      },
+      {
+        "id": "B",
+        "label": "Group B",
+        "teams": [
+          { "id": "B1", "name": "England" },
+          { "id": "B2", "name": "Paraguay" },
+          { "id": "B3", "name": "Trinidad and Tobago" },
+          { "id": "B4", "name": "Sweden" }
+        ]
+      },
+      {
+        "id": "C",
+        "label": "Group C",
+        "teams": [
+          { "id": "C1", "name": "Argentina" },
+          { "id": "C2", "name": "Ivory Coast" },
+          { "id": "C3", "name": "Serbia and Montenegro" },
+          { "id": "C4", "name": "Netherlands" }
+        ]
+      },
+      {
+        "id": "D",
+        "label": "Group D",
+        "teams": [
+          { "id": "D1", "name": "Mexico" },
+          { "id": "D2", "name": "Iran" },
+          { "id": "D3", "name": "Angola" },
+          { "id": "D4", "name": "Portugal" }
+        ]
+      },
+      {
+        "id": "E",
+        "label": "Group E",
+        "teams": [
+          { "id": "E1", "name": "Italy" },
+          { "id": "E2", "name": "Ghana" },
+          { "id": "E3", "name": "United States" },
+          { "id": "E4", "name": "Czech Republic" }
+        ]
+      },
+      {
+        "id": "F",
+        "label": "Group F",
+        "teams": [
+          { "id": "F1", "name": "Brazil" },
+          { "id": "F2", "name": "Croatia" },
+          { "id": "F3", "name": "Australia" },
+          { "id": "F4", "name": "Japan" }
+        ]
+      },
+      {
+        "id": "G",
+        "label": "Group G",
+        "teams": [
+          { "id": "G1", "name": "France" },
+          { "id": "G2", "name": "Switzerland" },
+          { "id": "G3", "name": "South Korea" },
+          { "id": "G4", "name": "Togo" }
+        ]
+      },
+      {
+        "id": "H",
+        "label": "Group H",
+        "teams": [
+          { "id": "H1", "name": "Spain" },
+          { "id": "H2", "name": "Ukraine" },
+          { "id": "H3", "name": "Tunisia" },
+          { "id": "H4", "name": "Saudi Arabia" }
+        ]
+      }
+    ]
+  }
+}

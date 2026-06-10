@@ -1,0 +1,88 @@
+{
+  "year": 1998,
+  "format": 32,
+  "teams": {
+    "groups": [
+      {
+        "id": "A",
+        "label": "Group A",
+        "teams": [
+          { "id": "A1", "name": "Brazil" },
+          { "id": "A2", "name": "Norway" },
+          { "id": "A3", "name": "Morocco" },
+          { "id": "A4", "name": "Scotland" }
+        ]
+      },
+      {
+        "id": "B",
+        "label": "Group B",
+        "teams": [
+          { "id": "B1", "name": "Italy" },
+          { "id": "B2", "name": "Chile" },
+          { "id": "B3", "name": "Cameroon" },
+          { "id": "B4", "name": "Austria" }
+        ]
+      },
+      {
+        "id": "C",
+        "label": "Group C",
+        "teams": [
+          { "id": "C1", "name": "France" },
+          { "id": "C2", "name": "Denmark" },
+          { "id": "C3", "name": "South Africa" },
+          { "id": "C4", "name": "Saudi Arabia" }
+        ]
+      },
+      {
+        "id": "D",
+        "label": "Group D",
+        "teams": [
+          { "id": "D1", "name": "Nigeria" },
+          { "id": "D2", "name": "Paraguay" },
+          { "id": "D3", "name": "Spain" },
+          { "id": "D4", "name": "Bulgaria" }
+        ]
+      },
+      {
+        "id": "E",
+        "label": "Group E",
+        "teams": [
+          { "id": "E1", "name": "Netherlands" },
+          { "id": "E2", "name": "Mexico" },
+          { "id": "E3", "name": "Belgium" },
+          { "id": "E4", "name": "South Korea" }
+        ]
+      },
+      {
+        "id": "F",
+        "label": "Group F",
+        "teams": [
+          { "id": "F1", "name": "Germany" },
+          { "id": "F2", "name": "Yugoslavia" },
+          { "id": "F3", "name": "Iran" },
+          { "id": "F4", "name": "United States" }
+        ]
+      },
+      {
+        "id": "G",
+        "label": "Group G",
+        "teams": [
+          { "id": "G1", "name": "Romania" },
+          { "id": "G2", "name": "England" },
+          { "id": "G3", "name": "Colombia" },
+          { "id": "G4", "name": "Tunisia" }
+        ]
+      },
+      {
+        "id": "H",
+        "label": "Group H",
+        "teams": [
+          { "id": "H1", "name": "Argentina" },
+          { "id": "H2", "name": "Croatia" },
+          { "id": "H3", "name": "Japan" },
+          { "id": "H4", "name": "Jamaica" }
+        ]
+      }
+    ]
+  }
+}

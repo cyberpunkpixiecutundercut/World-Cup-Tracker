@@ -1,0 +1,21 @@
+{
+  "label": "Semifinals",
+  "matches": [
+    {
+      "team1": "Germany",
+      "team2": "South Korea",
+      "score1": 1,
+      "score2": 0,
+      "extraTime": "",
+      "penalty": ""
+    },
+    {
+      "team1": "Brazil",
+      "team2": "Turkey",
+      "score1": 1,
+      "score2": 0,
+      "extraTime": "",
+      "penalty": ""
+    }
+  ]
+}

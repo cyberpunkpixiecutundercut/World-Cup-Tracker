@@ -1,0 +1,37 @@
+{
+  "label": "Quarterfinals",
+  "matches": [
+    {
+      "team1": "England",
+      "team2": "Brazil",
+      "score1": 1,
+      "score2": 2,
+      "extraTime": "",
+      "penalty": ""
+    },
+    {
+      "team1": "Germany",
+      "team2": "United States",
+      "score1": 1,
+      "score2": 0,
+      "extraTime": "",
+      "penalty": ""
+    },
+    {
+      "team1": "Senegal",
+      "team2": "Turkey",
+      "score1": 0,
+      "score2": 1,
+      "extraTime": "0-1",
+      "penalty": ""
+    },
+    {
+      "team1": "Spain",
+      "team2": "South Korea",
+      "score1": 0,
+      "score2": 0,
+      "extraTime": "0-0",
+      "penalty": "3-5"
+    }
+  ]
+}

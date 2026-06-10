@@ -1,0 +1,37 @@
+{
+  "label": "Quarterfinals",
+  "matches": [
+    {
+      "team1": "Netherlands",
+      "team2": "Brazil",
+      "score1": 2,
+      "score2": 1,
+      "extraTime": "",
+      "penalty": ""
+    },
+    {
+      "team1": "Uruguay",
+      "team2": "Ghana",
+      "score1": 1,
+      "score2": 1,
+      "extraTime": "0-0",
+      "penalty": "4-2"
+    },
+    {
+      "team1": "Argentina",
+      "team2": "Germany",
+      "score1": 0,
+      "score2": 4,
+      "extraTime": "",
+      "penalty": ""
+    },
+    {
+      "team1": "Paraguay",
+      "team2": "Spain",
+      "score1": 0,
+      "score2": 1,
+      "extraTime": "",
+      "penalty": ""
+    }
+  ]
+}

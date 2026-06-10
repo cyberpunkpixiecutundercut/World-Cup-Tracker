@@ -1,0 +1,88 @@
+{
+  "year": 2014,
+  "format": 32,
+  "teams": {
+    "groups": [
+      {
+        "id": "A",
+        "label": "Group A",
+        "teams": [
+          { "id": "A1", "name": "Brazil" },
+          { "id": "A2", "name": "Croatia" },
+          { "id": "A3", "name": "Mexico" },
+          { "id": "A4", "name": "Cameroon" }
+        ]
+      },
+      {
+        "id": "B",
+        "label": "Group B",
+        "teams": [
+          { "id": "B1", "name": "Spain" },
+          { "id": "B2", "name": "Netherlands" },
+          { "id": "B3", "name": "Chile" },
+          { "id": "B4", "name": "Australia" }
+        ]
+      },
+      {
+        "id": "C",
+        "label": "Group C",
+        "teams": [
+          { "id": "C1", "name": "Colombia" },
+          { "id": "C2", "name": "Greece" },
+          { "id": "C3", "name": "Ivory Coast" },
+          { "id": "C4", "name": "Japan" }
+        ]
+      },
+      {
+        "id": "D",
+        "label": "Group D",
+        "teams": [
+          { "id": "D1", "name": "Uruguay" },
+          { "id": "D2", "name": "Costa Rica" },
+          { "id": "D3", "name": "England" },
+          { "id": "D4", "name": "Italy" }
+        ]
+      },
+      {
+        "id": "E",
+        "label": "Group E",
+        "teams": [
+          { "id": "E1", "name": "Switzerland" },
+          { "id": "E2", "name": "Ecuador" },
+          { "id": "E3", "name": "France" },
+          { "id": "E4", "name": "Honduras" }
+        ]
+      },
+      {
+        "id": "F",
+        "label": "Group F",
+        "teams": [
+          { "id": "F1", "name": "Argentina" },
+          { "id": "F2", "name": "Bosnia and Herzegovina" },
+          { "id": "F3", "name": "Iran" },
+          { "id": "F4", "name": "Nigeria" }
+        ]
+      },
+      {
+        "id": "G",
+        "label": "Group G",
+        "teams": [
+          { "id": "G1", "name": "Germany" },
+          { "id": "G2", "name": "Portugal" },
+          { "id": "G3", "name": "Ghana" },
+          { "id": "G4", "name": "United States" }
+        ]
+      },
+      {
+        "id": "H",
+        "label": "Group H",
+        "teams": [
+          { "id": "H1", "name": "Belgium" },
+          { "id": "H2", "name": "Algeria" },
+          { "id": "H3", "name": "Russia" },
+          { "id": "H4", "name": "South Korea" }
+        ]
+      }
+    ]
+  }
+}

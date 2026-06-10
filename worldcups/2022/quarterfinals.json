@@ -1,0 +1,37 @@
+{
+  "label": "Quarterfinals",
+  "matches": [
+    {
+      "team1": "Croatia",
+      "team2": "Brazil",
+      "score1": 1,
+      "score2": 1,
+      "extraTime": "1-1",
+      "penalty": "4-2"
+    },
+    {
+      "team1": "Netherlands",
+      "team2": "Argentina",
+      "score1": 2,
+      "score2": 2,
+      "extraTime": "0-0",
+      "penalty": "3-4"
+    },
+    {
+      "team1": "Morocco",
+      "team2": "Portugal",
+      "score1": 1,
+      "score2": 0,
+      "extraTime": "",
+      "penalty": ""
+    },
+    {
+      "team1": "England",
+      "team2": "France",
+      "score1": 1,
+      "score2": 2,
+      "extraTime": "",
+      "penalty": ""
+    }
+  ]
+}

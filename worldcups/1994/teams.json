@@ -1,0 +1,68 @@
+{
+  "year": 1994,
+  "format": 24,
+  "teams": {
+    "groups": [
+      {
+        "id": "A",
+        "label": "Group A",
+        "teams": [
+          { "id": "A1", "name": "United States" },
+          { "id": "A2", "name": "Switzerland" },
+          { "id": "A3", "name": "Romania" },
+          { "id": "A4", "name": "Colombia" }
+        ]
+      },
+      {
+        "id": "B",
+        "label": "Group B",
+        "teams": [
+          { "id": "B1", "name": "Brazil" },
+          { "id": "B2", "name": "Russia" },
+          { "id": "B3", "name": "Cameroon" },
+          { "id": "B4", "name": "Sweden" }
+        ]
+      },
+      {
+        "id": "C",
+        "label": "Group C",
+        "teams": [
+          { "id": "C1", "name": "Germany" },
+          { "id": "C2", "name": "Spain" },
+          { "id": "C3", "name": "South Korea" },
+          { "id": "C4", "name": "Bolivia" }
+        ]
+      },
+      {
+        "id": "D",
+        "label": "Group D",
+        "teams": [
+          { "id": "D1", "name": "Argentina" },
+          { "id": "D2", "name": "Greece" },
+          { "id": "D3", "name": "Nigeria" },
+          { "id": "D4", "name": "Bulgaria" }
+        ]
+      },
+      {
+        "id": "E",
+        "label": "Group E",
+        "teams": [
+          { "id": "E1", "name": "Italy" },
+          { "id": "E2", "name": "Norway" },
+          { "id": "E3", "name": "Mexico" },
+          { "id": "E4", "name": "Republic of Ireland" }
+        ]
+      },
+      {
+        "id": "F",
+        "label": "Group F",
+        "teams": [
+          { "id": "F1", "name": "Netherlands" },
+          { "id": "F2", "name": "Saudi Arabia" },
+          { "id": "F3", "name": "Belgium" },
+          { "id": "F4", "name": "Morocco" }
+        ]
+      }
+    ]
+  }
+}

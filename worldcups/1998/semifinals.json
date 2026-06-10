@@ -1,0 +1,7 @@
+{
+  "label": "Semifinals",
+  "matches": [
+    { "team1": "A1", "score1": 1, "team2": "E1", "score2": 1, "extraTime": "0-0", "penalty": "4-2" },
+    { "team1": "C1", "score1": 2, "team2": "H2", "score2": 1, "extraTime": "", "penalty": "" }
+  ]
+}
