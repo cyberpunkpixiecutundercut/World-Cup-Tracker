@@ -1101,48 +1101,101 @@ function renderKnockoutRound(worldcup, roundKey, container, editable) {
     if (typeof m.score1 === "string" && m.score1 !== "") m.score1 = parseInt(m.score1, 10);
     if (typeof m.score2 === "string" && m.score2 !== "") m.score2 = parseInt(m.score2, 10);
 
-    const t1 = findTeamName(worldcup, m.team1);
-    const t2 = findTeamName(worldcup, m.team2);
+    const t1Name = findTeamName(worldcup, m.team1);
+    const t2Name = findTeamName(worldcup, m.team2);
 
     let etH = "", etA = "";
     if (m.extraTime && m.extraTime.includes("-")) {
       const [h, a] = m.extraTime.split("-");
-      etH = h;
-      etA = a;
+      etH = h; etA = a;
     }
 
     let penH = "", penA = "";
     if (m.penalty && m.penalty.includes("-")) {
       const [h, a] = m.penalty.split("-");
-      penH = h;
-      penA = a;
+      penH = h; penA = a;
     }
 
     if (editable) {
-      row.innerHTML = `
-        <span class="team-name">${t1}</span>
-        <span class="score-separator">
-          <input type="number" class="score-input" data-round="${roundKey}" data-index="${idx}" data-field="score1" value="${m.score1 ?? ""}">
-          <span class="score-line"></span>
-          <input type="number" class="score-input" data-round="${roundKey}" data-index="${idx}" data-field="score2" value="${m.score2 ?? ""}">
-        </span>
-        <span class="team-name">${t2}</span>
+      const homeDD = createTeamDropdown(worldcup, m.team1, id => m.team1 = id);
+      const awayDD = createTeamDropdown(worldcup, m.team2, id => m.team2 = id);
 
-        <input type="text" class="et-input" data-round="${roundKey}" data-index="${idx}" data-field="extraTimeHome" value="${etH}">
-        <input type="text" class="et-input" data-round="${roundKey}" data-index="${idx}" data-field="extraTimeAway" value="${etA}">
+      const scoreBox = document.createElement("div");
+      scoreBox.className = "score-box";   // ← same as groupstage
 
-        <input type="text" class="pen-input" data-round="${roundKey}" data-index="${idx}" data-field="penaltyHome" value="${penH}">
-        <input type="text" class="pen-input" data-round="${roundKey}" data-index="${idx}" data-field="penaltyAway" value="${penA}">
-      `;
+      const homeInput = document.createElement("input");
+      homeInput.type = "number";
+      homeInput.value = m.score1 ?? "";
+      homeInput.oninput = e =>
+        m.score1 = e.target.value === "" ? null : parseInt(e.target.value, 10);
+
+      const dash = document.createElement("span");
+      dash.className = "score-line";
+
+      const awayInput = document.createElement("input");
+      awayInput.type = "number";
+      awayInput.value = m.score2 ?? "";
+      awayInput.oninput = e =>
+        m.score2 = e.target.value === "" ? null : parseInt(e.target.value, 10);
+
+      scoreBox.appendChild(homeInput);
+      scoreBox.appendChild(dash);
+      scoreBox.appendChild(awayInput);
+
+      row.appendChild(homeDD);
+      row.appendChild(scoreBox);
+      row.appendChild(awayDD);
+
+      const etHome = document.createElement("input");
+      etHome.type = "text";
+      etHome.className = "et-input";
+      etHome.value = etH;
+      etHome.oninput = e => {
+        const v = e.target.value.trim();
+        m.extraTime = v && etA ? `${v}-${etA}` : v ? `${v}-0` : "";
+      };
+
+      const etAway = document.createElement("input");
+      etAway.type = "text";
+      etAway.className = "et-input";
+      etAway.value = etA;
+      etAway.oninput = e => {
+        const v = e.target.value.trim();
+        m.extraTime = etH && v ? `${etH}-${v}` : v ? `0-${v}` : "";
+      };
+
+      const penHome = document.createElement("input");
+      penHome.type = "text";
+      penHome.className = "pen-input";
+      penHome.value = penH;
+      penHome.oninput = e => {
+        const v = e.target.value.trim();
+        m.penalty = v && penA ? `${v}-${penA}` : v ? `${v}-0` : "";
+      };
+
+      const penAway = document.createElement("input");
+      penAway.type = "text";
+      penAway.className = "pen-input";
+      penAway.value = penA;
+      penAway.oninput = e => {
+        const v = e.target.value.trim();
+        m.penalty = penH && v ? `${penH}-${v}` : v ? `0-${v}` : "";
+      };
+
+      row.appendChild(etHome);
+      row.appendChild(etAway);
+      row.appendChild(penHome);
+      row.appendChild(penAway);
+
     } else {
       row.innerHTML = `
-        <span class="team-name">${t1}</span>
-        <span class="score-separator">
-          <span>${m.score1 == null ? "" : m.score1}</span>
+        <span class="team-name">${t1Name}</span>
+        <div class="score-box">
+          <span>${m.score1 ?? ""}</span>
           <span class="score-line"></span>
-          <span>${m.score2 == null ? "" : m.score2}</span>
-        </span>
-        <span class="team-name">${t2}</span>
+          <span>${m.score2 ?? ""}</span>
+        </div>
+        <span class="team-name">${t2Name}</span>
         <span>${etH}</span>
         <span>${etA}</span>
         <span>${penH}</span>
@@ -1153,8 +1206,6 @@ function renderKnockoutRound(worldcup, roundKey, container, editable) {
     panel.appendChild(row);
 
     if (m.score1 != null && m.score2 != null) {
-      const t1Name = findTeamName(worldcup, m.team1);
-      const t2Name = findTeamName(worldcup, m.team2);
       let w = null, l = null;
 
       if (m.score1 > m.score2) {
@@ -1163,14 +1214,14 @@ function renderKnockoutRound(worldcup, roundKey, container, editable) {
         w = t2Name; l = t1Name;
       } else {
         if (m.extraTime && m.extraTime.includes("-")) {
-          const [et1, et2] = m.extraTime.split("-").map(Number);
-          if (et1 > et2) { w = t1Name; l = t2Name; }
-          else if (et2 > et1) { w = t2Name; l = t1Name; }
+          const [a, b] = m.extraTime.split("-").map(Number);
+          if (a > b) { w = t1Name; l = t2Name; }
+          else if (b > a) { w = t2Name; l = t1Name; }
         }
         if (!w && m.penalty && m.penalty.includes("-")) {
-          const [p1, p2] = m.penalty.split("-").map(Number);
-          if (p1 > p2) { w = t1Name; l = t2Name; }
-          else if (p2 > p1) { w = t2Name; l = t1Name; }
+          const [a, b] = m.penalty.split("-").map(Number);
+          if (a > b) { w = t1Name; l = t2Name; }
+          else if (b > a) { w = t2Name; l = t1Name; }
         }
       }
 
@@ -1187,7 +1238,6 @@ function renderKnockoutRound(worldcup, roundKey, container, editable) {
     }
   });
 
-  // ⭐ WINNER LABEL
   const winnersLabel =
     roundKey === "final"
       ? "WINNER"
@@ -1195,13 +1245,11 @@ function renderKnockoutRound(worldcup, roundKey, container, editable) {
       ? "Third Place"
       : "WINNERS";
 
-  // ⭐ LOSER LABEL
   let loserLabel = null;
-
   if (roundKey === "final") {
     loserLabel = "Runner-Up";
   } else if (roundKey === "thirdplace") {
-    loserLabel = null; // hide loser block
+    loserLabel = null;
   } else {
     loserLabel = "Eliminated";
   }
@@ -1211,14 +1259,12 @@ function renderKnockoutRound(worldcup, roundKey, container, editable) {
 
   summary.innerHTML = `
     <h3>Match Reports / Results</h3>
-
     <div class="summary-block">
       <h4>${winnersLabel}</h4>
       ${winners.map(t => `<div>${t}</div>`).join("")}
     </div>
   `;
 
-  // ⭐ Only show loser block if label exists
   if (loserLabel) {
     summary.innerHTML += `
       <div class="summary-block">
@@ -1233,12 +1279,10 @@ function renderKnockoutRound(worldcup, roundKey, container, editable) {
       <h4>EXTRA TIME</h4>
       ${extraTime.length ? extraTime.map(x => `<div>${x}</div>`).join("") : "<div>None</div>"}
     </div>
-
     <div class="summary-block">
       <h4>PENALTIES</h4>
       ${penalties.length ? penalties.map(x => `<div>${x}</div>`).join("") : "<div>None</div>"}
     </div>
-
     <div class="summary-block">
       <h4>MATCH RESULTS</h4>
       ${results.map(x => `<div>${x}</div>`).join("")}
@@ -1257,6 +1301,7 @@ function renderKnockoutRound(worldcup, roundKey, container, editable) {
 
   panel.appendChild(summary);
 }
+
 
 /* ============================================================
    FINAL PANEL (CHAMPION)
