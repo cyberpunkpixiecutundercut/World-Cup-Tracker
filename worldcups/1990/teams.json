@@ -17,9 +17,9 @@
         "id": "B",
         "label": "Group B",
         "teams": [
-          { "id": "B1", "name": "Cameroon" },
+          { "id": "B1", "name": "Argentina" },
           { "id": "B2", "name": "Romania" },
-          { "id": "B3", "name": "Argentina" },
+          { "id": "B3", "name": "Cameroon" },
           { "id": "B4", "name": "Soviet Union" }
         ]
       },

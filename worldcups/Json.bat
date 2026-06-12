@@ -2,7 +2,7 @@
 setlocal ENABLEDELAYEDEXPANSION
 
 REM ============================================
-REM  PURE BATCH VERSION — NOW SUPPORTS ROUND32
+REM  PURE BATCH VERSION — NOW SUPPORTS DRAWINGLOTS + ROUND32
 REM ============================================
 
 set "ROOT=%~dp0"
@@ -36,8 +36,8 @@ for /d %%Y in ("%ROOT%\*") do (
         REM === DETECT FIFA ROUND FILES (ORDERED) ===
         set "roundList="
 
-        REM ⭐ ADDED round32 HERE
-        for %%R in (groupstage round32 round16 quarterfinals semifinals thirdplace final) do (
+        REM ⭐ NOW INCLUDES drawinglots.json
+        for %%R in (groupstage drawinglots round32 round16 quarterfinals semifinals thirdplace final) do (
             if exist "%%Y\%%R.json" (
                 set "roundList=!roundList! %%R"
             )

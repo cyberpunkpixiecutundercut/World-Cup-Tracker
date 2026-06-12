@@ -512,7 +512,7 @@ footer p {
   width: 55px;
   max-width: 60px;
   background: #000;
-  color: #eee;              /* match groupstage editable text */
+  color: #eee;        
   border: 1px solid #333;
   text-align: center;
   padding: 3px 4px;
@@ -540,21 +540,19 @@ footer p {
   text-align: left;
   letter-spacing: 0.5px;
 }
+
 /* ===========================
-   Knockout Score Line Visibility Fix
-=========================== */
-/* ===========================
-   Knockout Score Column Fix
+   Knockout Score Column
 =========================== */
 .match-row.s2plus {
   display: grid;
   grid-template-columns:
-    1.6fr         /* Home team */
-    1.2fr         /* Score — widened from 1fr */
-    1.6fr         /* Away team */
+    1.6fr        
+    1.2fr       
+    1.6fr     
     0.6fr 0.6fr 0.6fr 0.6fr;
   align-items: center;
-  gap: 8px;       /* slightly larger gap between cells */
+  gap: 8px;      
   text-align: center;
   padding: 4px 8px;
 }
@@ -581,8 +579,7 @@ footer p {
 }
 
 .match-row.s2plus .score-line {
-  width: 12px;
-  height: 2px;
+
   background: linear-gradient(to right, #0af, #0ff);
   border-radius: 2px;
   filter: drop-shadow(0 0 4px #0af);
@@ -591,7 +588,77 @@ footer p {
   flex-shrink: 0;
 }
 
+/* ============================================================
+   DRAWING OF LOTS UI (FINAL, CLEAN, NO UPLOAD)
+============================================================ */
 
+.drawing-lots-box {
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid #2a2a2a;
+  background: #111;
+  border-radius: 8px;
+  color: #eee;
+  font-size: 14px;
+}
+
+/* Cyan blue highlight */
+.drawing-lots-box strong {
+  color: #4ec9ff;
+}
+
+/* Buttons: Draw + Download */
+.btn-draw-lots,
+.btn-download-draw {
+  padding: 6px 12px;
+  background: #1e1e1e;
+  border: 1px solid #4ec9ff;
+  color: #4ec9ff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.15s;
+  font-size: 13px;
+  display: inline-block;
+}
+
+.btn-draw-lots:hover,
+.btn-download-draw:hover {
+  background: #4ec9ff;
+  color: #000;
+}
+/* REMOVE the box look completely */
+.drawing-lots-result {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* REMOVE the box look completely */
+.drawing-lots-result {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Title = cyan blue */
+.drawing-lots-result .title {
+  color: #4ec9ff;   /* cyan blue */
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 1.4;
+  margin: 0 0 4px 0;
+}
+
+/* Group + Winner = white */
+.drawing-lots-result .group {
+  color: #ffffff;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 1.4;
+  margin: 0;
+}
 
 
 /* MOBILE LAYOUT */
