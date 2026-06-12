@@ -46,10 +46,9 @@ button {
 
 .group-block > button {
   display: block;
-  margin-top: 12px;  
-  margin-bottom: 6px;
+  margin-top: 5px;  
+  margin-bottom: 5px;
 }
-
 
 button:hover {
   background: #666;
