@@ -53,6 +53,8 @@ let editTeams = null;
 let editSeason = null;
 let editPaths = null;
 
+let editDrawingLots = null;
+
 /* ============================================================
    DOM HELPERS
 ============================================================ */
@@ -456,7 +458,6 @@ function processWorldCupAuto(worldcup) {
   ============================================================ */
   if (format === 24) {
 
-    // STEP 1 — assign place codes and auto qualifiers
     groupStandings.forEach(g => {
       const t = g.table;
 
@@ -471,7 +472,6 @@ function processWorldCupAuto(worldcup) {
       qualifiers.eliminatedGroups.push(t[3].id);
     });
 
-    // STEP 1B — APPLY drawinglots.json OVERRIDE (OBJECT OR ARRAY)
     if (worldcup.drawingLotsData) {
       const dlArray = Array.isArray(worldcup.drawingLotsData)
         ? worldcup.drawingLotsData
@@ -511,10 +511,8 @@ function processWorldCupAuto(worldcup) {
       });
     }
 
-    // STEP 1C — DETECT TIES WHEN NO drawinglots.json → UI DOWNLOAD BUTTON
     if (!worldcup.drawingLotsData) {
       for (const g of groupStandings) {
-        // RAW TABLE (unsorted) to preserve tie
         const rawTable = computeGroupTable(
           g.table.map(r => r.id),
           (worldcup.teams.groups.find(x => x.id === g.groupId) || {}).teams || [],
@@ -546,7 +544,6 @@ function processWorldCupAuto(worldcup) {
       }
     }
 
-    // STEP 2 — collect A3..F3
     const thirdPlaces = groupStandings.map(g => {
       const r = g.table[2];
       return {
@@ -560,7 +557,6 @@ function processWorldCupAuto(worldcup) {
       };
     });
 
-    // STEP 3 — sort by FIFA rules
     thirdPlaces.sort((a, b) => {
       if (b.points !== a.points) return b.points - a.points;
       if (b.goalDiff !== a.goalDiff) return b.goalDiff - a.goalDiff;
@@ -568,16 +564,13 @@ function processWorldCupAuto(worldcup) {
       return a.name.localeCompare(b.name);
     });
 
-    // STEP 4 — pick best 4
     const bestFour = thirdPlaces.slice(0, 4);
 
-    // STEP 5 — build matrix key
     const matrixKey = bestFour
       .map(t => t.groupId)
       .sort()
       .join("+");
 
-    // STEP 6 — apply FIFA matrix
     const row = matrixThirdPlaces[matrixKey] || [];
 
     const assignedThirds = row
@@ -588,7 +581,6 @@ function processWorldCupAuto(worldcup) {
     qualifiers.round16.thirds = assignedThirds;
     qualifiers.round16.matrixThirdPlaces = [...assignedThirds];
 
-    // STEP 7 — eliminate unassigned 3rd-place teams
     const allThirdPlaces = thirdPlaces.map(t => t.place);
     const unassigned = allThirdPlaces.filter(p => !assignedThirds.includes(p));
 
@@ -630,7 +622,7 @@ function processWorldCupAuto(worldcup) {
   }
 
   /* ============================================================
-     32‑TEAM FORMAT
+     32‑TEAM FORMAT (UNIFIED DRAWING LOTS)
   ============================================================ */
   if (format === 32) {
     groupStandings.forEach(g => {
@@ -645,6 +637,82 @@ function processWorldCupAuto(worldcup) {
       qualifiers.round16.direct.push(t[1].place);
       qualifiers.eliminatedGroups.push(t[2].id, t[3].id);
     });
+
+    if (worldcup.drawingLotsData) {
+      const dlArray = Array.isArray(worldcup.drawingLotsData)
+        ? worldcup.drawingLotsData
+        : [worldcup.drawingLotsData];
+
+      dlArray.forEach(dl => {
+        const g = groupStandings.find(x => x.groupId === dl.groupId);
+        if (!g) return;
+
+        const t = g.table;
+
+        const winner = t.find(r => r.name === dl.winner);
+        const loser = t.find(
+          r => r.name !== dl.winner && dl.teams.includes(r.name)
+        );
+
+        if (winner && loser) {
+          const winnerOldPlace = winner.place;
+          const loserOldPlace = loser.place;
+
+          const idxWinner = t.findIndex(r => r.name === winner.name);
+          const idxLoser = t.findIndex(r => r.name === loser.name);
+
+          if (idxWinner > idxLoser) {
+            const tmp = t[idxWinner];
+            t[idxWinner] = t[idxLoser];
+            t[idxLoser] = tmp;
+          }
+
+          drawingLots.needed = false;
+          drawingLots.groupId = dl.groupId;
+          drawingLots.teams = dl.teams;
+          drawingLots.winner = dl.winner;
+
+          qualifiers.round16.direct = qualifiers.round16.direct.map(p => {
+            if (p === loserOldPlace) return loser.place;
+            if (p === winnerOldPlace) return winner.place;
+            return p;
+          });
+        }
+      });
+    }
+
+    if (!worldcup.drawingLotsData) {
+      for (const g of groupStandings) {
+        const rawTable = computeGroupTable(
+          g.table.map(r => r.id),
+          (worldcup.teams.groups.find(x => x.id === g.groupId) || {}).teams || [],
+          matches,
+          format
+        );
+
+        for (let i = 0; i < rawTable.length; i++) {
+          for (let j = i + 1; j < rawTable.length; j++) {
+            const A = rawTable[i];
+            const B = rawTable[j];
+
+            const equal =
+              A.points === B.points &&
+              A.goalDiff === B.goalDiff &&
+              A.goalsFor === B.goalsFor;
+
+            if (equal) {
+              drawingLots.needed = true;
+              drawingLots.groupId = g.groupId;
+              drawingLots.teams = [A.name, B.name];
+              drawingLots.winner = null;
+              break;
+            }
+          }
+          if (drawingLots.needed) break;
+        }
+        if (drawingLots.needed) break;
+      }
+    }
 
     const placeMap = {};
     qualifiers.round16.direct.forEach(p => {
@@ -668,6 +736,76 @@ function processWorldCupAuto(worldcup) {
      48‑TEAM FORMAT
   ============================================================ */
   if (format === 48) {
+
+    /* --- APPLY DRAWING LOTS OVERRIDE IF PRESENT --- */
+    if (worldcup.drawingLotsData) {
+      const dlArray = Array.isArray(worldcup.drawingLotsData)
+        ? worldcup.ddrawingLotsData
+        : [worldcup.drawingLotsData];
+
+      dlArray.forEach(dl => {
+        const g = groupStandings.find(x => x.groupId === dl.groupId);
+        if (!g) return;
+
+        const t = g.table;
+
+        const winner = t.find(r => r.name === dl.winner);
+        const loser = t.find(
+          r => r.name !== dl.winner && dl.teams.includes(r.name)
+        );
+
+        if (winner && loser) {
+          const idxWinner = t.findIndex(r => r.name === winner.name);
+          const idxLoser = t.findIndex(r => r.name === loser.name);
+
+          if (idxWinner > idxLoser) {
+            const tmp = t[idxWinner];
+            t[idxWinner] = t[idxLoser];
+            t[idxLoser] = tmp;
+          }
+
+          drawingLots.needed = false;
+          drawingLots.groupId = dl.groupId;
+          drawingLots.teams = dl.teams;
+          drawingLots.winner = dl.winner;
+        }
+      });
+    }
+
+    /* --- DETECT TIES IF NO DRAWING LOTS FILE --- */
+    if (!worldcup.drawingLotsData) {
+      for (const g of groupStandings) {
+        const rawTable = computeGroupTable(
+          g.table.map(r => r.id),
+          (worldcup.teams.groups.find(x => x.id === g.groupId) || {}).teams || [],
+          matches,
+          format
+        );
+
+        for (let i = 0; i < rawTable.length; i++) {
+          for (let j = i + 1; j < rawTable.length; j++) {
+            const A = rawTable[i];
+            const B = rawTable[j];
+
+            const equal =
+              A.points === B.points &&
+              A.goalDiff === B.goalDiff &&
+              A.goalsFor === B.goalsFor;
+
+            if (equal) {
+              drawingLots.needed = true;
+              drawingLots.groupId = g.groupId;
+              drawingLots.teams = [A.name, B.name];
+              drawingLots.winner = null;
+              break;
+            }
+          }
+          if (drawingLots.needed) break;
+        }
+        if (drawingLots.needed) break;
+      }
+    }
+
     const thirds = [];
 
     groupStandings.forEach(g => {
@@ -1169,9 +1307,6 @@ function generateRoundOf16(thirdPlaceCodes, matrix, engine) {
 }
 
 
-
-
-
 // 32‑TEAM ROUND OF 16 (direct from qualifiers)
 function generateRound16_FIFA32(worldcup, engine) {
   const d = engine.qualifiers.round16.direct;
@@ -1609,9 +1744,20 @@ function renderGroupStage(worldcup, container, editable) {
     let tieDetectedUI = false;
     let tieTeamsUI = [];
 
-    if (!worldcup.drawingLotsData && standings) {
+    // resolve drawingLotsData per group (object or array)
+    const dlEngine = engine.drawingLots;
+    let dlData = null;
+    if (Array.isArray(worldcup.drawingLotsData)) {
+      dlData =
+        worldcup.drawingLotsData.find(x => x.groupId === group.id) || null;
+    } else if (
+      worldcup.drawingLotsData &&
+      worldcup.drawingLotsData.groupId === group.id
+    ) {
+      dlData = worldcup.drawingLotsData;
+    }
 
-      // RAW UNSORTED TABLE — preserves tie
+    if (!dlData && standings) {
       const rawTable = computeGroupTable(
         group.teams.map(t => t.id),
         group.teams,
@@ -1639,90 +1785,89 @@ function renderGroupStage(worldcup, container, editable) {
       }
     }
 
-/* ============================================================
-   FINAL DRAWING OF LOTS SYSTEM (Rank 2 vs Rank 3 ONLY)
-============================================================ */
+    /* ============================================================
+       FINAL DRAWING OF LOTS SYSTEM (Rank 2 vs Rank 3 ONLY)
+    ============================================================ */
 
-const dl = engine.drawingLots;
+    const table = standings?.table;
 
-// standings.table is the ONLY correct table source
-const table = standings?.table;
+    if (tieDetectedUI || (dlEngine && dlEngine.groupId === group.id) || dlData) {
+      const box = document.createElement("div");
+      box.className = "drawing-lots-box";
 
-if (tieDetectedUI || (dl && dl.groupId === group.id)) {
-  const box = document.createElement("div");
-  box.className = "drawing-lots-box";
+      /* 1. FINAL WINNER (drawinglots.json loaded) */
+      if (dlData && dlData.winner) {
+        box.innerHTML = `
+          <div class="drawing-lots-result">
+            <div class="title">Drawing of Lots Winner</div>
+            <div class="group">Group ${group.id}, ${dlData.winner}</div>
+          </div>
+        `;
+      }
 
-  /* 1. FINAL WINNER (drawinglots.json loaded) */
-  if (worldcup.drawingLotsData && worldcup.drawingLotsData.groupId === group.id) {
-    box.innerHTML = `
-      <div class="drawing-lots-result">
-        <div class="title">Drawing of Lots Winner</div>
-        <div class="group">Group ${group.id}, ${worldcup.drawingLotsData.winner}</div>
-      </div>
-    `;
-  }
+      /* 2. SHOW DRAWING LOTS ONLY IF RANK 2 AND RANK 3 ARE TIED */
+      else if (tieDetectedUI && !dlData && table) {
 
-  /* 2. SHOW DRAWING LOTS ONLY IF RANK 2 AND RANK 3 ARE TIED */
-  else if (tieDetectedUI && !worldcup.drawingLotsData && table) {
+        const nameA = tieTeamsUI[0];
+        const nameB = tieTeamsUI[1];
 
-    const nameA = tieTeamsUI[0];
-    const nameB = tieTeamsUI[1];
+        let rankA = null;
+        let rankB = null;
 
-    let rankA = null;
-    let rankB = null;
+        for (let i = 0; i < table.length; i++) {
+          if (table[i].name === nameA) rankA = i + 1;
+          if (table[i].name === nameB) rankB = i + 1;
+        }
 
-    for (let i = 0; i < table.length; i++) {
-      if (table[i].name === nameA) rankA = i + 1;
-      if (table[i].name === nameB) rankB = i + 1;
+        const isRank2vs3 =
+          (rankA === 2 && rankB === 3) ||
+          (rankA === 3 && rankB === 2);
+
+        if (isRank2vs3) {
+          box.innerHTML = `
+            <div class="title" style="margin-bottom:6px;">Drawing of Lots</div>
+            <div style="margin-bottom:8px;">Teams are fully tied, choose the winner:</div>
+
+            <button class="btn-draw-lots auto-download" data-group="${group.id}" data-winner="${nameA}">
+              ${nameA}
+            </button>
+
+            <button class="btn-draw-lots auto-download" data-group="${group.id}" data-winner="${nameB}" style="margin-left:6px;">
+              ${nameB}
+            </button>
+          `;
+        }
+      }
+
+      /* 3. LEGACY ENGINE FALLBACK */
+      else if (dlEngine && dlEngine.winner && !dlData) {
+        box.innerHTML = `
+          <div class="drawing-lots-result">
+            <div class="title">Drawing of Lots Winner</div>
+            <div class="group">Group ${group.id}</div>
+            <div class="winner">${dlEngine.winner}</div>
+          </div>
+
+          <div style="margin-top:10px;">
+            <button class="btn-download-draw" data-group="${group.id}">
+              Download drawinglots.json
+            </button>
+          </div>
+        `;
+      }
+
+      if (box.innerHTML.trim() !== "") {
+        groupBox.appendChild(box);
+      }
     }
-
-    const isRank2vs3 =
-      (rankA === 2 && rankB === 3) ||
-      (rankA === 3 && rankB === 2);
-
-    if (isRank2vs3) {
-      box.innerHTML = `
-        <div class="title" style="margin-bottom:6px;">Drawing of Lots</div>
-        <div style="margin-bottom:8px;">Teams are fully tied, choose the winner:</div>
-
-        <button class="btn-draw-lots auto-download" data-group="${group.id}" data-winner="${nameA}">
-          ${nameA}
-        </button>
-
-        <button class="btn-draw-lots auto-download" data-group="${group.id}" data-winner="${nameB}" style="margin-left:6px;">
-          ${nameB}
-        </button>
-      `;
-    }
-  }
-
-  /* 3. LEGACY ENGINE FALLBACK */
-  else if (dl && dl.winner && !worldcup.drawingLotsData) {
-    box.innerHTML = `
-      <div class="drawing-lots-result">
-        <div class="title">Drawing of Lots Winner</div>
-        <div class="group">Group ${group.id}</div>
-        <div class="winner">${dl.winner}</div>
-      </div>
-
-      <div style="margin-top:10px;">
-        <button class="btn-download-draw" data-group="${group.id}">
-          Download drawinglots.json
-        </button>
-      </div>
-    `;
-  }
-
- if (box.innerHTML.trim() !== "") {
-    groupBox.appendChild(box);
-}
-}
 
     panel.appendChild(groupBox);
   });
 
   renderGroupStageQualificationBoxes(worldcup, engine, panel);
 }
+
+
 
 /* ============================================================
    UPDATED QUALIFICATION BOXES (24 / 32 / 48)
@@ -2468,6 +2613,7 @@ function createNewWorldCup() {
   renderFinishedWorldCup(currentWorldCup, true);
 }
 
+
 /* ============================================================
    LOAD WORLDCUPS LIST + SELECT YEAR
 ============================================================ */
@@ -2696,11 +2842,18 @@ function loadWorldCupJSON() {
       editFormat = json.format;
       editTeams = json.teams;
       editSeason = json.season;
+      editDrawingLots = json.drawingLotsData || null;
 
       $("editYear").value = editYear;
       $("formatDropdown").value = String(editFormat);
 
-      currentWorldCup = json;
+      currentWorldCup = {
+        year: editYear,
+        format: editFormat,
+        teams: editTeams,
+        season: editSeason,
+        drawingLotsData: editDrawingLots
+      };
 
       renderTeams(editTeams, "editTeams");
       finishedCurrentRound = "groupstage";
@@ -2715,8 +2868,17 @@ function loadWorldCupJSON() {
 
 function saveWorldCupJSON() {
   if (!currentWorldCup) return;
+
+  const exportData = {
+    year: currentWorldCup.year,
+    format: currentWorldCup.format,
+    teams: currentWorldCup.teams,
+    season: currentWorldCup.season,
+    drawingLotsData: currentWorldCup.drawingLotsData || null
+  };
+
   downloadJSON(
-    currentWorldCup,
+    exportData,
     `worldcup_${currentWorldCup.year || "new"}.json`
   );
 }
@@ -2746,6 +2908,7 @@ function loadSeasonRoundJSON() {
     reader.onload = async () => {
       let json = JSON.parse(reader.result);
 
+      // If file is an array → wrap into {label, matches}
       if (Array.isArray(json)) {
         json = {
           label: ROUND_LABELS[finishedCurrentRound],
@@ -2754,24 +2917,26 @@ function loadSeasonRoundJSON() {
       }
 
       /* ============================================================
-         ⭐ LOAD drawinglots.json FROM WORLD CUP PATHS
+         ⭐ LOAD drawinglots.json FROM THE SAME PATH AS VIEWER MODE
+         (editPaths.season.drawinglots)
       ============================================================ */
       let drawingLots = null;
 
-      if (editPaths?.season?.drawinglots) {
+      const dlPath = editPaths?.season?.drawinglots;
+      if (dlPath) {
         try {
-          const dlReq = await fetch(editPaths.season.drawinglots);
+          const dlReq = await fetch(dlPath);
           if (dlReq.ok) {
             drawingLots = await dlReq.json();
-            console.log("Loaded drawinglots.json:", drawingLots);
+            console.log("Loaded drawinglots.json (EDITOR):", drawingLots);
           }
         } catch (err) {
-          console.warn("drawinglots.json not found");
+          console.warn("drawinglots.json not found in editor mode");
         }
       }
 
       /* ============================================================
-         RESET WORLD CUP OBJECT (EDITOR MODE)
+         RESET WORLD CUP OBJECT FOR EDITOR MODE
       ============================================================ */
       currentWorldCup = {
         year: editYear || null,
@@ -2789,17 +2954,33 @@ function loadSeasonRoundJSON() {
           final: { label: "Final", matches: [] }
         },
 
-        // ⭐ EDITOR NOW HAS REAL DRAWINGLOTS.JSON
+        // ⭐ Editable mode now has the SAME drawingLotsData as viewer mode
         drawingLotsData: drawingLots
       };
 
       currentWorldCup.season[finishedCurrentRound] = json;
 
+      /* ============================================================
+         ⭐ REPROCESS GROUPSTAGE WITH DRAWING LOTS APPLIED
+      ============================================================ */
       if (finishedCurrentRound === "groupstage") {
         const engine = processWorldCupAuto(currentWorldCup);
+
+        // If engine already has a winner → override drawingLotsData
+        if (engine.drawingLots && engine.drawingLots.winner) {
+          currentWorldCup.drawingLotsData = {
+            groupId: engine.drawingLots.groupId,
+            teams: engine.drawingLots.teams,
+            winner: engine.drawingLots.winner
+          };
+        }
+
         ensureKnockoutGenerated(currentWorldCup, "round16");
       }
 
+      /* ============================================================
+         RENDER EDITOR VIEW
+      ============================================================ */
       editSeason = currentWorldCup.season;
       renderFinishedWorldCup(currentWorldCup, true);
     };
