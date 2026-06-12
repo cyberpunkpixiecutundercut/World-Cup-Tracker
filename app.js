@@ -2838,15 +2838,29 @@ function loadWorldCupJSON() {
     reader.onload = () => {
       const json = JSON.parse(reader.result);
 
+      // Extract core fields
       editYear = json.year;
       editFormat = json.format;
       editTeams = json.teams;
-      editSeason = json.season;
+      editSeason = json.season || {};
       editDrawingLots = json.drawingLotsData || null;
 
-      $("editYear").value = editYear;
-      $("formatDropdown").value = String(editFormat);
+      // Ensure season contains correct rounds for 24 / 32 / 48
+      editSeason = {
+        groupstage: editSeason.groupstage || { label: "Group Stage", matches: [] },
 
+        ...(editFormat === 48
+          ? { round32: editSeason.round32 || { label: "Round of 32", matches: [] } }
+          : {}),
+
+        round16: editSeason.round16 || { label: "Round of 16", matches: [] },
+        quarterfinals: editSeason.quarterfinals || { label: "Quarterfinals", matches: [] },
+        semifinals: editSeason.semifinals || { label: "Semifinals", matches: [] },
+        thirdplace: editSeason.thirdplace || { label: "Third Place", matches: [] },
+        final: editSeason.final || { label: "Final", matches: [] }
+      };
+
+      // Build worldcup object
       currentWorldCup = {
         year: editYear,
         format: editFormat,
@@ -2855,6 +2869,11 @@ function loadWorldCupJSON() {
         drawingLotsData: editDrawingLots
       };
 
+      // Update UI fields
+      $("editYear").value = editYear;
+      $("formatDropdown").value = String(editFormat);
+
+      // Render editor
       renderTeams(editTeams, "editTeams");
       finishedCurrentRound = "groupstage";
       renderFinishedWorldCup(currentWorldCup, true);
