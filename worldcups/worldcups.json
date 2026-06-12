@@ -22,6 +22,7 @@
         "teams": "worldcups/1994/teams.json",
         "season": {
           "groupstage": "worldcups/1994/groupstage.json",
+          "drawinglots": "worldcups/1994/drawinglots.json",
           "round16": "worldcups/1994/round16.json",
           "quarterfinals": "worldcups/1994/quarterfinals.json",
           "semifinals": "worldcups/1994/semifinals.json",
