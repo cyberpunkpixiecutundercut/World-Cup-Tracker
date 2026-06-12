@@ -44,6 +44,13 @@ button {
   cursor: pointer;
 }
 
+.group-block > button {
+  display: block;
+  margin-top: 12px;  
+  margin-bottom: 6px;
+}
+
+
 button:hover {
   background: #666;
 }
@@ -352,7 +359,7 @@ section {
   align-items: center;
   gap: 6px;
   text-align: center;
-  padding: 4px 8px;      /* keep editable layout padding */
+  padding: 4px 8px;    
 }
 
 .match-row.s2plus.match-header {
