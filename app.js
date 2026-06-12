@@ -1069,14 +1069,14 @@ const ROUND16_MATRIX_24 = {
   ],
 
 "B D E F": [
-  { team1: "B1", team2: "D3" }, // Cameroon vs Colombia
-  { team1: "A2", team2: "C2" }, // Czechoslovakia vs Costa Rica
-  { team1: "D1", team2: "F2" }, // West Germany vs Netherlands
-  { team1: "A1", team2: "E3" }, // Italy vs Uruguay
-  { team1: "F3", team2: "B2" }, // Republic of Ireland vs Romania
-  { team1: "E1", team2: "D2" }, // Spain vs Yugoslavia
-  { team1: "C1", team2: "B3" }, // Brazil vs Argentina
-  { team1: "F1", team2: "E2" }  // England vs Belgium
+  { team1: "B1", team2: "D3" }, 
+  { team1: "A2", team2: "C2" },
+  { team1: "D1", team2: "F2" },
+  { team1: "A1", team2: "E3" },
+  { team1: "F3", team2: "B2" }, 
+  { team1: "E1", team2: "D2" },
+  { team1: "C1", team2: "B3" },
+  { team1: "F1", team2: "E2" } 
 ],
 
 
@@ -1639,70 +1639,90 @@ function renderGroupStage(worldcup, container, editable) {
       }
     }
 
-    /* ============================================================
-       FINAL DRAWING OF LOTS SYSTEM
-    ============================================================ */
+/* ============================================================
+   FINAL DRAWING OF LOTS SYSTEM (Rank 2 vs Rank 3 ONLY)
+============================================================ */
 
-    const dl = engine.drawingLots;
+const dl = engine.drawingLots;
 
-    if (tieDetectedUI || (dl && dl.groupId === group.id)) {
-      const box = document.createElement("div");
-      box.className = "drawing-lots-box";
+// standings.table is the ONLY correct table source
+const table = standings?.table;
 
-      if (worldcup.drawingLotsData && worldcup.drawingLotsData.groupId === group.id) {
-  box.innerHTML = `
-    <div class="drawing-lots-result">
-      <div class="title">Drawing of Lots Winner</div>
-      <div class="group">${"Group " + group.id}, ${worldcup.drawingLotsData.winner}</div>
-    </div>
-  `;
-}
+if (tieDetectedUI || (dl && dl.groupId === group.id)) {
+  const box = document.createElement("div");
+  box.className = "drawing-lots-box";
 
+  /* 1. FINAL WINNER (drawinglots.json loaded) */
+  if (worldcup.drawingLotsData && worldcup.drawingLotsData.groupId === group.id) {
+    box.innerHTML = `
+      <div class="drawing-lots-result">
+        <div class="title">Drawing of Lots Winner</div>
+        <div class="group">Group ${group.id}, ${worldcup.drawingLotsData.winner}</div>
+      </div>
+    `;
+  }
 
-      else if (tieDetectedUI && !worldcup.drawingLotsData) {
-  box.innerHTML = `
-    <div class="title" style="margin-bottom:6px;">Drawing of Lots</div>
-    <div style="margin-bottom:8px;">Teams are fully tied, choose the winner:</div>
+  /* 2. SHOW DRAWING LOTS ONLY IF RANK 2 AND RANK 3 ARE TIED */
+  else if (tieDetectedUI && !worldcup.drawingLotsData && table) {
 
-    <button class="btn-draw-lots auto-download" data-group="${group.id}" data-winner="${tieTeamsUI[0]}">
-      ${tieTeamsUI[0]}
-    </button>
+    const nameA = tieTeamsUI[0];
+    const nameB = tieTeamsUI[1];
 
-    <button class="btn-draw-lots auto-download" data-group="${group.id}" data-winner="${tieTeamsUI[1]}" style="margin-left:6px;">
-      ${tieTeamsUI[1]}
-    </button>
-  `;
-}
+    let rankA = null;
+    let rankB = null;
 
-
-
-      else if (dl && dl.winner && !worldcup.drawingLotsData) {
-        box.innerHTML = `
-          <div class="drawing-lots-result">
-            <div class="title">Drawing of Lots Winner</div>
-            <div class="group">Group ${group.id}</div>
-            <div class="winner">${dl.winner}</div>
-          </div>
-
-          <div style="margin-top:10px;">
-            <button class="btn-download-draw" data-group="${group.id}">
-              Download drawinglots.json
-            </button>
-          </div>
-        `;
-      }
-
-      groupBox.appendChild(box);
+    for (let i = 0; i < table.length; i++) {
+      if (table[i].name === nameA) rankA = i + 1;
+      if (table[i].name === nameB) rankB = i + 1;
     }
+
+    const isRank2vs3 =
+      (rankA === 2 && rankB === 3) ||
+      (rankA === 3 && rankB === 2);
+
+    if (isRank2vs3) {
+      box.innerHTML = `
+        <div class="title" style="margin-bottom:6px;">Drawing of Lots</div>
+        <div style="margin-bottom:8px;">Teams are fully tied, choose the winner:</div>
+
+        <button class="btn-draw-lots auto-download" data-group="${group.id}" data-winner="${nameA}">
+          ${nameA}
+        </button>
+
+        <button class="btn-draw-lots auto-download" data-group="${group.id}" data-winner="${nameB}" style="margin-left:6px;">
+          ${nameB}
+        </button>
+      `;
+    }
+  }
+
+  /* 3. LEGACY ENGINE FALLBACK */
+  else if (dl && dl.winner && !worldcup.drawingLotsData) {
+    box.innerHTML = `
+      <div class="drawing-lots-result">
+        <div class="title">Drawing of Lots Winner</div>
+        <div class="group">Group ${group.id}</div>
+        <div class="winner">${dl.winner}</div>
+      </div>
+
+      <div style="margin-top:10px;">
+        <button class="btn-download-draw" data-group="${group.id}">
+          Download drawinglots.json
+        </button>
+      </div>
+    `;
+  }
+
+ if (box.innerHTML.trim() !== "") {
+    groupBox.appendChild(box);
+}
+}
 
     panel.appendChild(groupBox);
   });
 
   renderGroupStageQualificationBoxes(worldcup, engine, panel);
 }
-
-
-
 
 /* ============================================================
    UPDATED QUALIFICATION BOXES (24 / 32 / 48)
